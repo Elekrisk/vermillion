@@ -1,0 +1,12 @@
+[package]
+name = "vermillion"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+num-traits = "0.2"
+num-bigint = "0.4"
+peg = { git = "https://github.com/kevinmehall/rust-peg" }
+inkwell = { git = "https://github.com/TheDan64/inkwell", branch = "master", features = ["llvm12-0"] }

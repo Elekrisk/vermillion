@@ -1,0 +1,30 @@
+
+fn main {
+    let limit = 100000
+    var prime_count <- 0
+
+    var n <- 2
+    loop {
+        if n >= limit {
+            break
+        }
+
+        var i <- 2
+        loop {
+            if i * i > n {
+                prime_count <- prime_count + 1
+                break
+            }
+
+            if n % i = 0 {
+                break
+            }
+
+            i <- i + 1
+        }
+
+        n <- n + 1
+    }
+
+    prime_count
+}

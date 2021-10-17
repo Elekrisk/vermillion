@@ -1,0 +1,76 @@
+
+program = fn*
+
+fn = FN IDENT IDENT* LBRACE stmnt* RBRACE
+
+stmnt = LET ptrn EQ expr END
+      / VAR ptrn (LARROW expr)? END
+      / BREAK expr? END
+      / CONTINUE END
+      / RETURN expr? END
+      / YIELD expr? END
+      / ptrn LARROW expr END
+      / expr END
+
+# ->
+# ,
+# or
+# and
+# = != > >= < <=
+# + -
+# * / //
+# function application
+# method application
+
+expr = expr0
+
+expr0 = ptrn* RARROW expr
+      / expr1
+
+expr1 = expr2 (COMMA expr2)*
+
+expr2 = expr3 (OR expr3)*
+
+expr3 = expr4 (AND expr4)*
+
+expr4 = expr5 ((EQ / NEQ / GT / GTEQ / LT / LTEQ) expr5)?
+
+expr5 = expr6 ((PLUS / MINUS) expr6)*
+
+expr6 = expr7 ((STAR / SLASH / DOUBLESLASH) expr7)*
+
+expr7 = expr8 (EXCL_MARK expr8*)?
+
+expr8 = expr9 (PERIOD IDENT EXCL_MARK expr9*)?
+
+expr9 = expr_atom
+
+expr_atom = IF expr THEN expr (ELSE IF expr THEN expr)* (ELSE expr)?
+          / LOOP LBRACE stmnt* RBRACE
+          / FOR ptrn IN expr LBRACE stmnt* RBRACE
+          / WHILE expr LBRACE stmnt* RBRACE
+          / LPAREN expr RPAREN
+          / LBRACE stmnt* RBRACE
+          / IDENT
+          / STRING
+          / INTEGER
+          / FLOAT
+          / CHAR
+          / BOOL
+          / NIL
+
+ptrn = ptrn0
+
+ptrn0 = ptrn1 (COMMA ptrn1)*
+
+ptrn1 = ptrn_atom
+
+ptrn_atom = LPAREN ptrn RPAREN
+          / IDENT
+          / STRING
+          / INTEGER
+          / FLOAT
+          / CHAR
+          / BOOL
+          / NIL
+          / UNDERSCORE
